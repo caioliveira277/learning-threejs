@@ -19,6 +19,7 @@ camera.position.set(100, 900, 0);
 /* renderers */
 const renderer = new THREE.WebGLRenderer({antialias: true});
 document.body.appendChild(renderer.domElement);
+renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 /* renderers */
 
