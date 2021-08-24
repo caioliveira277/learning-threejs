@@ -8,7 +8,7 @@ function randomRange(min, max) {
 /* scenes */
 const scene = new THREE.Scene();
 scene.background = new THREE.Color('#000');
-scene.fog = new THREE.FogExp2(0x000, 0.002);
+scene.fog = new THREE.FogExp2(new THREE.Color('#000'), 0.0015);
 /* scenes */
 
 /* cameras */
@@ -32,35 +32,35 @@ controls.minDistance = 100;
 controls.maxDistance = 500;
 controls.autoRotate = true;
 controls.autoRotateSpeed = 1;
-controls.minPolarAngle = 1.3
+controls.minPolarAngle = 1;
 /* controlls */
 
 /* lights */
 const fireFlies = [];
 for (let i = 0; i < 30; i++) {
-    const pointLight = new THREE.PointLight(0xff0000, 0.9, 300, 2.4);
+    const pointLight = new THREE.PointLight(new THREE.Color('#fafafa'), 0.9, 300, 2.4);
     const pointHelper = new THREE.PointLightHelper(pointLight, 10);
 
-    const randomPositionX = randomRange(1, 1400) - 800;
-    const randomPositionZ = randomRange(1, 1400) - 800;
-    pointLight.position.set(randomPositionX, 40, randomPositionZ);
+    pointLight.position.set(randomRange(1, 1400) - 800, 40, randomRange(1, 1400) - 800);
     scene.add(pointLight);
     scene.add(pointHelper);
+    
+    const fireFlyColor = new THREE.PointLight(new THREE.Color('#158004'), 1, 300, 2.4);
+    const fireFlyColorHelper = new THREE.PointLightHelper(fireFlyColor, 1);
 
-    const ponintLightGreen = new THREE.PointLight(0x3e3, 1, 300, 2.4);
-    scene.add(ponintLightGreen);
-    fireFlies.push(ponintLightGreen);
+    fireFlyColor.position.set(randomRange(1, 2400) - 800, 40, randomRange(1, 1400) - 800);
+    scene.add(fireFlyColor);
+    scene.add(fireFlyColorHelper);
+    fireFlies.push(fireFlyColor);
 
 }
 
-const ambientLight = new THREE.AmbientLight(0x000, 0.4);
-const ambientLightProbe = new THREE.AmbientLightProbe(0xff0, 0.2)
+const ambientLight = new THREE.AmbientLight(new THREE.Color('#2e2e2e'), 0.4);
+const ambientLightProbe = new THREE.AmbientLightProbe(new THREE.Color('#2C0C87'), 0.2)
 
 scene.add(ambientLight);
 scene.add(ambientLightProbe);
 
-//helpers
-//helpers
 /* lights */
 
 
@@ -68,9 +68,9 @@ scene.add(ambientLightProbe);
 
 const cylinders = [];
 for ( let i = 0; i < 300; i ++ ) {
-    const randomHeight = randomRange(250, 40);
+    const randomHeight = randomRange(40, 170);
     const geometry = new THREE.CylinderGeometry(0, 10, randomHeight, 4, 1);
-    const material = new THREE.MeshPhongMaterial({ color: 0xffffff, flatShading: true });
+    const material = new THREE.MeshPhysicalMaterial({ color: new THREE.Color('#DFBAFC'), flatShading: true });
     const mesh = new THREE.Mesh( geometry, material );
 
     mesh.position.x = Math.random() * 1400 - 800;
@@ -87,17 +87,72 @@ function OnResize() {
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
 };
-window.addEventListener( 'resize', OnResize );
+window.addEventListener('resize', OnResize);
+
+for (let i = 0; i < fireFlies.length; i++) {
+    let fireFly = fireFlies[i];
+
+    fireFly.maxX = randomRange(fireFly.position.x, 1000);
+    fireFly.maxZ = randomRange(fireFly.position.z, 300);
+    fireFly.calcX = '+';
+    fireFly.calcZ = '+';
+    
+    fireFly.randomMovimentX = randomRange(100, 300);
+    fireFly.randomMovimentZ = randomRange(100, 300);
+}
 
 (function animate() {
 	requestAnimationFrame(animate);
 
     controls.update();
 
-    // for (let i = 0; i < fireFlies.length; i++) {
-    //     let fireFly = fireFlies[i];
-    //     fireFly.position.set(fireFly.position.x + 1, 0, 0)
-    // }
+    for (let i = 0; i < fireFlies.length; i++) {
+        let fireFly = fireFlies[i];
+
+        let nextPositionX = fireFly.position.x;
+        let nextPositionZ = fireFly.position.z;
+        
+        if(fireFly.position.x === fireFly.maxX && fireFly.calcX === '+') {
+            fireFly.calcX = '-';
+            fireFly.randomMovimentX = randomRange(100, 1000);
+        }
+        if(fireFly.position.x === 0 && fireFly.calcX === '-')  {
+            fireFly.calcX = '+';
+            fireFly.randomMovimentX = randomRange(100, 1000);
+        }
+
+        if(fireFly.position.z === fireFly.maxZ && fireFly.calcZ === '+') {
+            fireFly.calcZ = '-';
+            fireFly.randomMovimentZ = randomRange(100, 300);
+        }
+        if(fireFly.position.z === 0 && fireFly.calcZ === '-')  {
+            fireFly.calcZ = '+';
+            fireFly.randomMovimentZ = randomRange(100, 300);
+        }
+
+        if(fireFly.calcX === '+') {
+            nextPositionX += 0.5;
+        }else {
+            nextPositionX -=  0.5;
+        }
+
+        if(fireFly.calcZ === '+') {
+            nextPositionZ += 1;
+        }else {
+            nextPositionZ -= 1;
+        }
+
+        /* movimento aleatório */
+        if(fireFly.randomMovimentX === fireFly.maxX) {
+            fireFly.maxX = randomRange(100, 1000);
+        }
+        if(fireFly.randomMovimentZ === fireFly.maxZ) {
+            fireFly.maxZ = randomRange(100, 300);
+        }
+
+
+        fireFly.position.set(nextPositionX, 40, nextPositionZ);
+    }
 
 	renderer.render(scene, camera);
 })();
