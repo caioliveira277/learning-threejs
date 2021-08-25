@@ -4,7 +4,8 @@ import WebGLRenderer from '@src/core/Renderer';
 
 import Controls from '@src/app/controls';
 import Lights from '@src/app/lights';
-import Objects from '@src/app/objects/Object';
+import Objects from '@src/objects/Object';
+import Listeners from '@src/listeners';
 
 class Core {
     protected forestScene: ForestScene;
@@ -14,6 +15,7 @@ class Core {
     protected controls: Controls;
     protected lights: Lights;
     protected objects: Objects;
+    protected listeners: Listeners;
 
     constructor() {
         this.forestScene = new ForestScene();
@@ -23,6 +25,7 @@ class Core {
         this.controls = new Controls(this.perspectiveCamera, this.webGLRenderer);
         this.lights = new Lights(this.forestScene);
         this.objects = new Objects(this.forestScene);
+        this.listeners = new Listeners(this.perspectiveCamera, this.webGLRenderer);
 
         this.setCoreAnimate();
     }

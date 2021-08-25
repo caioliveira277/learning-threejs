@@ -3,7 +3,7 @@ import {
     WebGLRenderer
 } from 'three';
 
-export default class Listeners {
+export default class Resize {
     protected camera: PerspectiveCamera;
     protected renderer: WebGLRenderer;
 
