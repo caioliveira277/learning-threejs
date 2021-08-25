@@ -1,5 +1,5 @@
-import { 
-    WebGLRenderer as WebGL 
+import {
+    WebGLRenderer as WebGL
 } from 'three';
 
 class WebGLRenderer extends WebGL{
