@@ -11,12 +11,12 @@ interface IrandomizeAxisValues {
         parameter: number
     }
 }
-function randomizeAxisValues(axis: IrandomizeAxisValues): IrandomizeAxisValues {
-    if(axis.x.value % 2) {
+function randomizeAxisValues(axis: IrandomizeAxisValues, index: number): IrandomizeAxisValues {
+    if(index % 2) {
         axis.x.value *= -1;
     }
 
-    if(axis.z.value <= axis.z.parameter) {
+    if(index <= axis.z.parameter) {
         axis.z.value *= -1;
     }
 
