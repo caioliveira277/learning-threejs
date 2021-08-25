@@ -4,10 +4,10 @@ import WebGLRenderer from '@src/core/Renderer';
 
 import Controls from '@src/app/controls';
 import Lights from '@src/app/lights';
-import Objects from '@src/app/objects/Object';
+import Objects from '@src/app/objects';
 import Listeners from '@src/app/listeners';
 
-class Core {
+new (class Core {
     protected forestScene: ForestScene;
     protected perspectiveCamera: PerspectiveCamera;
     protected webGLRenderer: WebGLRenderer;
@@ -18,10 +18,12 @@ class Core {
     protected listeners: Listeners;
 
     constructor() {
+        /* Core */
         this.forestScene = new ForestScene();
         this.perspectiveCamera = new PerspectiveCamera();
         this.webGLRenderer = new WebGLRenderer();
 
+        /* App */
         this.controls = new Controls(this.perspectiveCamera, this.webGLRenderer);
         this.lights = new Lights(this.forestScene);
         this.objects = new Objects(this.forestScene);
@@ -40,6 +42,4 @@ class Core {
             self.webGLRenderer.render(self.forestScene, self.perspectiveCamera);
         })();
     }
-}
-
-new Core();
+});

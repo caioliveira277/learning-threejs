@@ -1,16 +1,14 @@
 import {
-    PlaneGeometry,
     MeshPhysicalMaterial,
     CylinderGeometry,
     Color,
-    DoubleSide,
     Mesh,
     Scene
 } from 'three';
 import { randomizeRange, randomizeAxisValues } from '@src/utils';
 import config from '@src/config';
 
-export default class Objects {
+export default class Cylinder {
     private readonly maxCylinders = config.cylinders.maxCylinder;
     private readonly planeConfig = config.plane;
     private readonly cylinderConfig = config.cylinders;
@@ -20,20 +18,11 @@ export default class Objects {
 
     constructor(scene: Scene) {
         this.scene = scene;
-        this.setPlane();
+
         this.setCylinders();
     }
 
-    private setPlane(): void {
-        const geometry = new PlaneGeometry(this.planeConfig.size, this.planeConfig.size);
-        const material = new MeshPhysicalMaterial({color: new Color('#DFBAFC'), side: DoubleSide});
-        const plane = new Mesh(geometry, material);
 
-        plane.position.set(0, 0, 0);
-        plane.rotation.x = - Math.PI/2;
-
-        this.scene.add(plane);
-    }
 
     private setCylinders(): void {
         let heightParams = this.cylinderConfig.randomizeHeight;
