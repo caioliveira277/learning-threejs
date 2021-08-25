@@ -1,0 +1,24 @@
+import { Camera, WebGLRenderer} from 'three';
+import { OrbitControls as Orbit } from 'three/examples/jsm/controls/OrbitControls.js';
+
+class OrbitControls extends Orbit {
+    constructor(camera: Camera, renderer: WebGLRenderer) {
+        super(camera, renderer.domElement);
+
+        this.setParameters();
+    }
+
+    private setParameters(): void {
+        this.enableDamping = true;
+        this.dampingFactor = 0.05;
+        this.target.set(0, 0, 0);
+        this.screenSpacePanning = false;
+        this.minDistance = 500;
+        this.maxDistance = 1000;
+        this.autoRotate = true;
+        this.autoRotateSpeed = 1;
+        this.minPolarAngle = 1.2;
+    }
+}
+
+export default OrbitControls;
