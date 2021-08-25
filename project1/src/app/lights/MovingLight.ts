@@ -1,8 +1,6 @@
 import {
     PointLight,
     PointLightHelper,
-    AmbientLight,
-    AmbientLightProbe,
     Color,
     Scene
 } from 'three';
@@ -17,56 +15,36 @@ interface ImovingLightsParameters extends PointLight{
     toX?: number,
     toZ?: number,
 }
-export default class Lights {
-    private readonly maxLightPoints = config.lightPoints.maxLights;
+export default class MovingLight {
     private readonly maxMovingLights = config.movingLights.maxLights;
-    private readonly planeConfig = config.plane;
     private readonly lightConfig = config.movingLights;
+    private readonly planeConfig = config.plane;
+    private readonly maxLightPoints = config.lightPoints.maxLights;
+
     public renderedMovingLights: ImovingLightsParameters[] = [];
+
     protected scene: Scene;
 
     constructor(scene: Scene) {
         this.scene = scene;
 
-        this.setLightPoints();
-        this.setMovingLights();
-        this.setEnvironmentLights();
+        this.setLight();
     }
 
-    private setLightPoints(): void {
-        const lightConfig = config.lightPoints;
+    private generateNewPosition(currentPosition: number, toPosition: number): number{
+        const lightConfig = config.movingLights;
+        let nextPosition: number = currentPosition;
 
-        for (let i = 0; i < this.maxLightPoints; i++) {
-            const pointLight = new PointLight(
-                new Color(lightConfig.color),
-                lightConfig.intensity,
-                lightConfig.distance,
-                lightConfig.decay
-            );
-            const pointLightHelper = new PointLightHelper(pointLight, 7);
-
-            const randomAxis = randomizeAxisValues({
-                x: {
-                    value: randomizeRange(0, this.planeConfig.halfSize) - 40
-                },
-                z: {
-                    value: randomizeRange(0, this.planeConfig.halfSize) - 40,
-                    parameter: this.maxLightPoints / 2
-                }
-            }, i);
-
-            pointLight.position.x = randomAxis.x.value;
-            pointLight.position.y = 40;
-            pointLight.position.z = randomAxis.z.value;
-            this.scene.add(pointLight);
-
-            if(lightConfig.helper) {
-                this.scene.add(pointLightHelper);
-            }
+        if(currentPosition < toPosition) {
+            nextPosition += lightConfig.animationSpeed;
+        } else if (currentPosition > toPosition){
+            nextPosition -= lightConfig.animationSpeed;
         }
+
+        return nextPosition;
     }
 
-    private setMovingLights(): void {
+    private setLight(): void {
         for (let i = 0; i < this.maxMovingLights; i++) {
             const dynamicColor = i % 2 ? this.lightConfig.color.one : this.lightConfig.color.two;
 
@@ -102,28 +80,7 @@ export default class Lights {
         }
     }
 
-    private setEnvironmentLights(): void {
-        const ambientLight = new AmbientLight(new Color('#000'), 0.4);
-        const ambientLightProbe = new AmbientLightProbe(new Color('#2C0C87'), 0.2);
-
-        this.scene.add(ambientLight);
-        this.scene.add(ambientLightProbe);
-    }
-
-    private generateNewPosition(currentPosition: number, toPosition: number): number{
-        const lightConfig = config.movingLights;
-        let nextPosition: number = currentPosition;
-
-        if(currentPosition < toPosition) {
-            nextPosition += lightConfig.animationSpeed;
-        } else if (currentPosition > toPosition){
-            nextPosition -= lightConfig.animationSpeed;
-        }
-
-        return nextPosition;
-    }
-
-    public setMovingLightsAnimate(): void {
+    public setAnimate(): void {
         for (let i = 0; i < this.renderedMovingLights.length; i++) {
             let pointLight = this.renderedMovingLights[i];
 
