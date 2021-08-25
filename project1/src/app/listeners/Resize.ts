@@ -11,7 +11,8 @@ export default class Resize {
         this.camera = camera;
         this.renderer = renderer;
 
-        window.addEventListener('resize', this.setOnResize);
+        this.setOnResize();
+        window.addEventListener('resize', () => this.setOnResize());
     }
 
     private setOnResize(): void {
