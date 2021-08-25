@@ -1,13 +1,13 @@
-import { 
+import {
     PerspectiveCamera as Perspective
  } from 'three';
 
 class PerspectiveCamera extends Perspective {
     constructor() {
         super(
-            45, 
-            window.innerWidth / window.innerHeight, 
-            1, 
+            45,
+            window.innerWidth / window.innerHeight,
+            1,
             10000
         );
 
