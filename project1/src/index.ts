@@ -4,8 +4,8 @@ import WebGLRenderer from '@src/core/Renderer';
 
 import Controls from '@src/app/controls';
 import Lights from '@src/app/lights';
-import Objects from '@src/objects/Object';
-import Listeners from '@src/listeners';
+import Objects from '@src/app/objects/Object';
+import Listeners from '@src/app/listeners';
 
 class Core {
     protected forestScene: ForestScene;
