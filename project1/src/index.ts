@@ -1,3 +1,3 @@
-import '../src/listeners';
-import '../src/objects';
-import '../src/animates';
+import '@src/listeners';
+import '@src/objects';
+import '@src/animates';

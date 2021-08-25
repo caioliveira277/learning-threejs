@@ -6,5 +6,9 @@
         "target": "ES6",
         "allowJs": true,
         "moduleResolution": "node",
+        "baseUrl": "./src",
+        "paths": {
+            "@src/*": ["*"]
+        }
     }
 }
