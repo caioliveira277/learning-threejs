@@ -3,28 +3,31 @@ import {
     PointLightHelper,
     AmbientLight,
     AmbientLightProbe,
-    Color
+    Color,
+    Scene
 } from 'three';
 import {
     randomizeRange,
     randomizeAxisValues
-} from '../utils';
-import ForestScene from '../scenes';
-import config from '../config';
+} from '@src/utils';
+import config from '@src/config';
 
 interface ImovingLightsParameters extends PointLight{
     initial?: Boolean,
     toX?: number,
     toZ?: number,
 }
-class Lights {
+export default class Lights {
     private readonly maxLightPoints = config.lightPoints.maxLights;
     private readonly maxMovingLights = config.movingLights.maxLights;
     private readonly planeConfig = config.plane;
     private readonly lightConfig = config.movingLights;
     public renderedMovingLights: ImovingLightsParameters[] = [];
+    protected scene: Scene;
 
-    constructor() {
+    constructor(scene: Scene) {
+        this.scene = scene;
+
         this.setLightPoints();
         this.setMovingLights();
         this.setEnvironmentLights();
@@ -55,10 +58,10 @@ class Lights {
             pointLight.position.x = randomAxis.x.value;
             pointLight.position.y = 40;
             pointLight.position.z = randomAxis.z.value;
-            ForestScene.add(pointLight);
+            this.scene.add(pointLight);
 
             if(lightConfig.helper) {
-                ForestScene.add(pointLightHelper);
+                this.scene.add(pointLightHelper);
             }
         }
     }
@@ -89,10 +92,10 @@ class Lights {
             pointLight.position.y = 40;
             pointLight.position.z = randomAxis.z.value;
 
-            ForestScene.add(pointLight);
+            this.scene.add(pointLight);
 
             if(this.lightConfig.helper) {
-                ForestScene.add(pointLightHelper);
+                this.scene.add(pointLightHelper);
             }
 
             this.renderedMovingLights.push(pointLight);
@@ -103,8 +106,8 @@ class Lights {
         const ambientLight = new AmbientLight(new Color('#000'), 0.4);
         const ambientLightProbe = new AmbientLightProbe(new Color('#2C0C87'), 0.2);
 
-        ForestScene.add(ambientLight);
-        ForestScene.add(ambientLightProbe);
+        this.scene.add(ambientLight);
+        this.scene.add(ambientLightProbe);
     }
 
     private generateNewPosition(currentPosition: number, toPosition: number): number{
@@ -158,5 +161,3 @@ class Lights {
         }
     }
 }
-
-export default new Lights;

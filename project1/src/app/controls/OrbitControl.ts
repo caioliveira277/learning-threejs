@@ -1,10 +1,12 @@
-import WebGLRenderer from '../renderers';
-import PerspectiveCamera from '../cameras';
+import {
+    PerspectiveCamera,
+    WebGLRenderer
+} from 'three';
 import { OrbitControls as Orbit } from 'three/examples/jsm/controls/OrbitControls.js';
 
-class OrbitControls extends Orbit {
-    constructor() {
-        super(PerspectiveCamera, WebGLRenderer.domElement);
+export default class OrbitControls extends Orbit {
+    constructor(camera: PerspectiveCamera, renderer: WebGLRenderer) {
+        super(camera, renderer.domElement);
 
         this.setParameters();
     }
@@ -21,5 +23,3 @@ class OrbitControls extends Orbit {
         this.minPolarAngle = 1.35;
     }
 }
-
-export default new OrbitControls;

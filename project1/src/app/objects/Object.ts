@@ -4,19 +4,22 @@ import {
     CylinderGeometry,
     Color,
     DoubleSide,
-    Mesh
+    Mesh,
+    Scene
 } from 'three';
-import ForestScene from '../scenes';
-import { randomizeRange, randomizeAxisValues } from '../utils';
-import config from '../config';
+import { randomizeRange, randomizeAxisValues } from '@src/utils';
+import config from '@src/config';
 
-class Objects {
+export default class Objects {
     private readonly maxCylinders = config.cylinders.maxCylinder;
     private readonly planeConfig = config.plane;
     private readonly cylinderConfig = config.cylinders;
     public renderedCylinders: Mesh<CylinderGeometry, MeshPhysicalMaterial>[] = [];
 
-    constructor() {
+    protected scene: Scene;
+
+    constructor(scene: Scene) {
+        this.scene = scene;
         this.setPlane();
         this.setCylinders();
     }
@@ -29,7 +32,7 @@ class Objects {
         plane.position.set(0, 0, 0);
         plane.rotation.x = - Math.PI/2;
 
-        ForestScene.add(plane);
+        this.scene.add(plane);
     }
 
     private setCylinders(): void {
@@ -56,10 +59,8 @@ class Objects {
             mesh.position.y = randomHeightGeometry / 2;
             mesh.position.z = randomAxis.z.value;
 
-            ForestScene.add(mesh);
+            this.scene.add(mesh);
             this.renderedCylinders.push(mesh);
         }
     }
 }
-
-export default new Objects;
