@@ -2,7 +2,7 @@ import {
     PerspectiveCamera as Perspective
  } from 'three';
 
-class PerspectiveCamera extends Perspective {
+export default class PerspectiveCamera extends Perspective {
     constructor() {
         super(
             45,
@@ -18,5 +18,3 @@ class PerspectiveCamera extends Perspective {
         this.position.set(100, 900, 0);
     }
 }
-
-export default new PerspectiveCamera;

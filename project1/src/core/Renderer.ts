@@ -2,7 +2,7 @@ import {
     WebGLRenderer as WebGL
 } from 'three';
 
-class WebGLRenderer extends WebGL{
+export default class WebGLRenderer extends WebGL{
     constructor() {
         super({
             antialias: true
@@ -21,5 +21,3 @@ class WebGLRenderer extends WebGL{
         document.body.appendChild(this.domElement);
     }
 }
-
-export default new WebGLRenderer();

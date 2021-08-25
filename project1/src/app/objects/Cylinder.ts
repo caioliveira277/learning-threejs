@@ -1,36 +1,28 @@
 import {
-    PlaneGeometry,
     MeshPhysicalMaterial,
     CylinderGeometry,
     Color,
-    DoubleSide,
-    Mesh
+    Mesh,
+    Scene
 } from 'three';
-import ForestScene from '../scenes';
-import { randomizeRange, randomizeAxisValues } from '../utils';
-import config from '../config';
+import { randomizeRange, randomizeAxisValues } from '@src/utils';
+import config from '@src/config';
 
-class Objects {
+export default class Cylinder {
     private readonly maxCylinders = config.cylinders.maxCylinder;
     private readonly planeConfig = config.plane;
     private readonly cylinderConfig = config.cylinders;
     public renderedCylinders: Mesh<CylinderGeometry, MeshPhysicalMaterial>[] = [];
 
-    constructor() {
-        this.setPlane();
+    protected scene: Scene;
+
+    constructor(scene: Scene) {
+        this.scene = scene;
+
         this.setCylinders();
     }
 
-    private setPlane(): void {
-        const geometry = new PlaneGeometry(this.planeConfig.size, this.planeConfig.size);
-        const material = new MeshPhysicalMaterial({color: new Color('#DFBAFC'), side: DoubleSide});
-        const plane = new Mesh(geometry, material);
 
-        plane.position.set(0, 0, 0);
-        plane.rotation.x = - Math.PI/2;
-
-        ForestScene.add(plane);
-    }
 
     private setCylinders(): void {
         let heightParams = this.cylinderConfig.randomizeHeight;
@@ -56,10 +48,8 @@ class Objects {
             mesh.position.y = randomHeightGeometry / 2;
             mesh.position.z = randomAxis.z.value;
 
-            ForestScene.add(mesh);
+            this.scene.add(mesh);
             this.renderedCylinders.push(mesh);
         }
     }
 }
-
-export default new Objects;

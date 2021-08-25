@@ -19,6 +19,16 @@ export default {
         animationSpeed: 0.5,
         maxLights: 15
     },
+    envioronmentLight: {
+        ambientLight: {
+            color: '#000',
+            intensity:  0.4,
+        },
+        ambientLightProbe: {
+            color: '#2C0C87',
+            intensity:  0.2,
+        },
+    },
     plane: {
         size: 1000,
         halfSize: 500
