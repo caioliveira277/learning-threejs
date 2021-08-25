@@ -10,12 +10,19 @@ import {
     randomizeAxisValues
 } from '../utils';
 import ForestScene from '../scenes';
+import config from '../config';
 
-
+interface ImovingLightsParameters extends PointLight{
+    initial?: Boolean,
+    toX?: number,
+    toZ?: number,
+}
 class Lights {
-    private readonly maxLightPoints = 20;
-    private readonly maxMovingLights = 15;
-    public renderedMovingLights: PointLight[] = [];
+    private readonly maxLightPoints = config.lightPoints.maxLights;
+    private readonly maxMovingLights = config.movingLights.maxLights;
+    private readonly planeConfig = config.plane;
+    private readonly lightConfig = config.movingLights;
+    public renderedMovingLights: ImovingLightsParameters[] = [];
 
     constructor() {
         this.setLightPoints();
@@ -24,55 +31,71 @@ class Lights {
     }
 
     private setLightPoints(): void {
+        const lightConfig = config.lightPoints;
+
         for (let i = 0; i < this.maxLightPoints; i++) {
-            const pointLight = new PointLight(new Color('#fafafa'), 0.4, 300, 2.4);
-            const lightPointLight = new PointLightHelper(pointLight, 7);
+            const pointLight = new PointLight(
+                new Color(lightConfig.color),
+                lightConfig.intensity,
+                lightConfig.distance,
+                lightConfig.decay
+            );
+            const pointLightHelper = new PointLightHelper(pointLight, 7);
 
             const randomAxis = randomizeAxisValues({
                 x: {
-                    value: randomizeRange(0, 500) - 40
+                    value: randomizeRange(0, this.planeConfig.halfSize) - 40
                 },
                 z: {
-                    value: randomizeRange(0, 500) - 40,
+                    value: randomizeRange(0, this.planeConfig.halfSize) - 40,
                     parameter: this.maxLightPoints / 2
                 }
-            });
+            }, i);
 
             pointLight.position.x = randomAxis.x.value;
             pointLight.position.y = 40;
             pointLight.position.z = randomAxis.z.value;
-
             ForestScene.add(pointLight);
-            ForestScene.add(lightPointLight);
+
+            if(lightConfig.helper) {
+                ForestScene.add(pointLightHelper);
+            }
         }
     }
 
     private setMovingLights(): void {
         for (let i = 0; i < this.maxMovingLights; i++) {
-            const dynamicColor = this.maxMovingLights % 2 ? '#54CD41':'#E2DB36';
+            const dynamicColor = i % 2 ? this.lightConfig.color.one : this.lightConfig.color.two;
 
-            const pointLight = new PointLight(new Color(dynamicColor), 0.5, 300, 2.4);
-            const lightPointLight = new PointLightHelper(pointLight, 0.7);
+            const pointLight = new PointLight(
+                new Color(dynamicColor),
+                this.lightConfig.intensity,
+                this.lightConfig.distance,
+                this.lightConfig.decay
+            );
+            const pointLightHelper = new PointLightHelper(pointLight, 0.7);
 
             const randomAxis = randomizeAxisValues({
                 x: {
-                    value: randomizeRange(0, 500) - 40
+                    value: randomizeRange(0, this.planeConfig.halfSize) - 40
                 },
                 z: {
-                    value: randomizeRange(0, 500) - 40,
+                    value: randomizeRange(0, this.planeConfig.halfSize) - 40,
                     parameter: this.maxLightPoints / 2
                 }
-            });
+            }, i);
 
             pointLight.position.x = randomAxis.x.value;
             pointLight.position.y = 40;
             pointLight.position.z = randomAxis.z.value;
 
             ForestScene.add(pointLight);
-            ForestScene.add(lightPointLight);
+
+            if(this.lightConfig.helper) {
+                ForestScene.add(pointLightHelper);
+            }
 
             this.renderedMovingLights.push(pointLight);
-
         }
     }
 
@@ -82,6 +105,57 @@ class Lights {
 
         ForestScene.add(ambientLight);
         ForestScene.add(ambientLightProbe);
+    }
+
+    private generateNewPosition(currentPosition: number, toPosition: number): number{
+        const lightConfig = config.movingLights;
+        let nextPosition: number = currentPosition;
+
+        if(currentPosition < toPosition) {
+            nextPosition += lightConfig.animationSpeed;
+        } else if (currentPosition > toPosition){
+            nextPosition -= lightConfig.animationSpeed;
+        }
+
+        return nextPosition;
+    }
+
+    public setMovingLightsAnimate(): void {
+        for (let i = 0; i < this.renderedMovingLights.length; i++) {
+            let pointLight = this.renderedMovingLights[i];
+
+            let nextPositionX = pointLight.position.x;
+            let nextPositionZ = pointLight.position.z;
+
+            const randomAxis = randomizeAxisValues({
+                x: {
+                    value: randomizeRange(0, this.planeConfig.halfSize) - 40
+                },
+                z: {
+                    value: randomizeRange(0, this.planeConfig.halfSize) - 40,
+                    parameter: this.renderedMovingLights.length / 2
+                }
+            }, i);
+
+
+            if(!pointLight.initial) {
+                pointLight.initial = true;
+                pointLight.toX = randomAxis.x.value;
+                pointLight.toZ = randomAxis.z.value;
+            }
+
+            nextPositionX = this.generateNewPosition(pointLight.position.x, pointLight.toX);
+            if(pointLight.position.x === pointLight.toX) {
+                pointLight.toX = randomAxis.z.value;
+            }
+
+            nextPositionZ = this.generateNewPosition(pointLight.position.z, pointLight.toZ);
+            if(pointLight.position.z === pointLight.toZ) {
+                pointLight.toZ = randomAxis.z.value;
+            }
+
+            pointLight.position.set(nextPositionX, 40, nextPositionZ);
+        }
     }
 }
 

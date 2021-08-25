@@ -15,10 +15,10 @@ class OrbitControls extends Orbit {
         this.target.set(0, 0, 0);
         this.screenSpacePanning = false;
         this.minDistance = 500;
-        this.maxDistance = 1000;
+        this.maxDistance = 500;
         this.autoRotate = true;
         this.autoRotateSpeed = 1;
-        // this.minPolarAngle = 1.2;
+        this.minPolarAngle = 1.35;
     }
 }
 
