@@ -4,7 +4,7 @@ import {
 } from 'three';
 import { OrbitControls as Orbit } from 'three/examples/jsm/controls/OrbitControls.js';
 
-export default class OrbitControls extends Orbit {
+export default class OrbitControl extends Orbit {
     constructor(camera: PerspectiveCamera, renderer: WebGLRenderer) {
         super(camera, renderer.domElement);
 

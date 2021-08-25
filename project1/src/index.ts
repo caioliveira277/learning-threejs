@@ -2,7 +2,7 @@ import ForestScene from '@src/core/Scene';
 import PerspectiveCamera from '@src/core/Camera';
 import WebGLRenderer from '@src/core/Renderer';
 
-import OrbitControls from '@src/app/controls/OrbitControl';
+import Controls from '@src/app/controls';
 import Lights from '@src/app/lights/Light';
 import Objects from '@src/app/objects/Object';
 
@@ -11,7 +11,7 @@ class Core {
     protected perspectiveCamera: PerspectiveCamera;
     protected webGLRenderer: WebGLRenderer;
 
-    protected orbitControls: OrbitControls;
+    protected controls: Controls;
     protected lights: Lights;
     protected objects: Objects;
 
@@ -20,7 +20,7 @@ class Core {
         this.perspectiveCamera = new PerspectiveCamera();
         this.webGLRenderer = new WebGLRenderer();
 
-        this.orbitControls = new OrbitControls(this.perspectiveCamera, this.webGLRenderer);
+        this.controls = new Controls(this.perspectiveCamera, this.webGLRenderer);
         this.lights = new Lights(this.forestScene);
         this.objects = new Objects(this.forestScene);
 
@@ -32,7 +32,7 @@ class Core {
         (function animate() {
             requestAnimationFrame(animate);
 
-            self.orbitControls.update();
+            self.controls.orbitControl.update();
             self.lights.setMovingLightsAnimate();
             self.webGLRenderer.render(self.forestScene, self.perspectiveCamera);
         })();
