@@ -53,5 +53,10 @@ export default {
             maxDistance: 400,
             autoRotate: false,
         }
+    },
+    tests: {
+        stats: {
+            show: true
+        }
     }
 }

@@ -3,8 +3,11 @@ import {
     WebGLRenderer
 } from 'three';
 import { OrbitControls as Orbit } from 'three/examples/jsm/controls/OrbitControls.js';
+import config from '@src/config';
 
 export default class OrbitControl extends Orbit {
+    private readonly orbitConfig = config.controls.orbit;
+
     constructor(camera: PerspectiveCamera, renderer: WebGLRenderer) {
         super(camera, renderer.domElement);
 
@@ -16,10 +19,11 @@ export default class OrbitControl extends Orbit {
         this.dampingFactor = 0.05;
         this.target.set(0, 0, 0);
         this.screenSpacePanning = false;
-        this.minDistance = 500;
-        this.maxDistance = 500;
-        this.autoRotate = true;
         this.autoRotateSpeed = 1;
-        this.minPolarAngle = 1.35;
+
+        this.minDistance = this.orbitConfig.minDistance;
+        this.maxDistance = this.orbitConfig.maxDistance;
+        this.minPolarAngle = this.orbitConfig.minPolarAngle;
+        this.autoRotate = this.orbitConfig.autoRotate;
     }
 }
