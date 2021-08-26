@@ -21,7 +21,8 @@ export default {
     },
     envioronmentLight: {
         ambientLight: {
-            color: '#000',
+            color: '#fff',
+            // color: '#000',
             intensity:  0.4,
         },
         ambientLightProbe: {
@@ -34,10 +35,23 @@ export default {
         halfSize: 500
     },
     cylinders: {
-        maxCylinder: 150,
+        // maxCylinder: 150,
+        maxCylinder: 0,
         randomizeHeight: {
             min: 40,
             max: 150
+        }
+    },
+    controls: {
+        orbit: {
+            // minPolarAngle: 1.35,
+            // minDistance: 500,
+            // maxDistance: 500,
+            // autoRotate: true,
+            minPolarAngle: 1,
+            minDistance: 0,
+            maxDistance: 400,
+            autoRotate: false,
         }
     }
 }
