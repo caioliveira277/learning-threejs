@@ -7,6 +7,8 @@ import Lights from '@src/app/lights';
 import Objects from '@src/app/objects';
 import Listeners from '@src/app/listeners';
 
+import Tests from '@src/tests';
+
 new (class Core {
     protected forestScene: ForestScene;
     protected perspectiveCamera: PerspectiveCamera;
@@ -16,6 +18,8 @@ new (class Core {
     protected lights: Lights;
     protected objects: Objects;
     protected listeners: Listeners;
+
+    protected tests: Tests;
 
     constructor() {
         /* Core */
@@ -29,6 +33,9 @@ new (class Core {
         this.objects = new Objects(this.forestScene);
         this.listeners = new Listeners(this.perspectiveCamera, this.webGLRenderer);
 
+        /* Tests */
+        this.tests = new Tests();
+
         this.setCoreAnimate();
     }
 
@@ -40,6 +47,8 @@ new (class Core {
             self.controls.orbitControl.update();
             self.lights.movingLight.setAnimate();
             self.webGLRenderer.render(self.forestScene, self.perspectiveCamera);
+
+            self.tests.stats.setUpdate();
         })();
     }
 });
