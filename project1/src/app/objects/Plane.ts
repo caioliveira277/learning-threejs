@@ -5,8 +5,10 @@ import {
     DoubleSide,
     Mesh,
     Scene,
+    BufferAttribute,
 } from 'three';
 import config from '@src/config';
+import { randomizeRange } from '@src/utils';
 
 export default class Plane {
     private readonly planeConfig = config.plane;
@@ -32,7 +34,19 @@ export default class Plane {
     }
 
     private teste(): void {
-        const geometry = new PlaneGeometry(100, 100, 256, 256);
+        const geometry = new PlaneGeometry(50, 50, 50, 50);
+
+        const teste = new Float32Array(geometry.attributes.position.array.length);
+        for (let i = 0; i <= geometry.attributes.position.array.length; i++) {
+            let value = geometry.attributes.position.array[i];
+
+            if(!value) {
+                value = randomizeRange(-25, 25);
+            }
+            teste[i] = value;
+        }
+        // geometry.setAttribute('position', new BufferAttribute(teste, 3, true));
+
         const material = new MeshPhysicalMaterial({color: new Color('#DFBAFC'), side: DoubleSide});
         const plane = new Mesh(geometry, material);
 
