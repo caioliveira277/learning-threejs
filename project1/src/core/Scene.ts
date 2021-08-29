@@ -14,6 +14,6 @@ export default class ForestScene extends Scene {
 
     private setEnvironment(): void {
         this.background = new Color(this.sceneConfig.background);
-        this.fog = new FogExp2(this.sceneConfig.fog, 0.0005);
+        this.fog = new FogExp2(this.sceneConfig.fog, 0.0035);
     }
 }

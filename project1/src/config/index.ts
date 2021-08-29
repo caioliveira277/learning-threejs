@@ -1,13 +1,13 @@
 export default {
     scene: {
-        background: '#fff',
-        fog: '#fff'
-        // background: '#000',
-        // fog: '#000'
+        // background: '#ddd',
+        // fog: '#fff'
+        background: '#05011D',
+        fog: '#05011D'
     },
     lightPoints: {
         helper: false,
-        color: '#fafafa',
+        color: '#fff',
         intensity:  0.4,
         distance: 300,
         decay: 2.4,
@@ -16,10 +16,10 @@ export default {
     movingLights: {
         helper: true,
         color: {
-            one: '#54CD41',
-            two: '#F9595B'
+            one: '#7A65FD',
+            two: '#4232A0'
         },
-        intensity:  0.5,
+        intensity:  0.3,
         distance: 300,
         decay: 2.4,
         animationSpeed: 0.5,
@@ -27,8 +27,8 @@ export default {
     },
     envioronmentLight: {
         ambientLight: {
-            color: '#fff',
-            // color: '#000',
+            // color: '#fff',
+            color: '#000',
             intensity:  0.4,
         },
         ambientLightProbe: {
@@ -54,10 +54,10 @@ export default {
             // minDistance: 500,
             // maxDistance: 500,
             // autoRotate: true,
-            minPolarAngle: 1,
+            minPolarAngle: 1.3,
             minDistance: 0,
-            maxDistance: 500,
-            autoRotate: false,
+            maxDistance: 100,
+            autoRotate: true,
         }
     },
     tests: {
