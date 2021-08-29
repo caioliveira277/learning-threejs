@@ -3,15 +3,17 @@ import {
     Color,
     FogExp2
 } from 'three';
+import config from '@src/config';
 
 export default class ForestScene extends Scene {
+    private readonly sceneConfig = config.scene;
     constructor() {
         super();
         this.setEnvironment();
     }
 
     private setEnvironment(): void {
-        this.background = new Color('#000');
-        this.fog = new FogExp2('#000', 0.0005);
+        this.background = new Color(this.sceneConfig.background);
+        this.fog = new FogExp2(this.sceneConfig.fog, 0.0005);
     }
 }

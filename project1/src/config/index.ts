@@ -1,4 +1,10 @@
 export default {
+    scene: {
+        background: '#fff',
+        fog: '#fff'
+        // background: '#000',
+        // fog: '#000'
+    },
     lightPoints: {
         helper: false,
         color: '#fafafa',
@@ -50,7 +56,7 @@ export default {
             // autoRotate: true,
             minPolarAngle: 1,
             minDistance: 0,
-            maxDistance: 400,
+            maxDistance: 500,
             autoRotate: false,
         }
     },
