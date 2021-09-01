@@ -24,6 +24,7 @@ export default class OrbitControl extends Orbit {
         this.minDistance = this.orbitConfig.minDistance;
         this.maxDistance = this.orbitConfig.maxDistance;
         this.minPolarAngle = this.orbitConfig.minPolarAngle;
+        this.maxPolarAngle = this.orbitConfig.maxPolarAngle;
         this.autoRotate = this.orbitConfig.autoRotate;
     }
 }
