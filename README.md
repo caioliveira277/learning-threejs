@@ -1,4 +1,4 @@
-# **learning-threejs**
+# **Learning-threejs**
 ## Projetos básicos para aprender threejs
 
 <br>
