@@ -19,7 +19,7 @@ export default class MovingLight {
     private readonly maxMovingLights = config.movingLights.maxLights;
     private readonly lightConfig = config.movingLights;
     private readonly planeConfig = config.plane;
-    private readonly maxLightPoints = config.lightPoints.maxLights;
+    private readonly maxLightPoints = config.movingLights.maxLights;
 
     public renderedMovingLights: ImovingLightsParameters[] = [];
 
