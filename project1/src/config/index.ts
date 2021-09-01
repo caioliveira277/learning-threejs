@@ -1,27 +1,30 @@
 export default {
-    lightPoints: {
-        helper: false,
-        color: '#fafafa',
-        intensity:  0.4,
-        distance: 300,
-        decay: 2.4,
-        maxLights: 20
+    scene: {
+        background: '#05011D',
+        fog: '#05011D'
+    },
+    stars: {
+        helper: true,
+        color: '#fff',
+        intensity:  1,
+        distance: 20,
+        maxLights: 40
     },
     movingLights: {
         helper: true,
         color: {
-            one: '#54CD41',
-            two: '#F9595B'
+            one: '#7A65FD',
+            two: '#4232A0'
         },
-        intensity:  0.5,
+        intensity:  0.3,
         distance: 300,
         decay: 2.4,
         animationSpeed: 0.5,
-        maxLights: 15
+        maxLights: 10
     },
     envioronmentLight: {
         ambientLight: {
-            color: '#000',
+            color: '#fff',
             intensity:  0.4,
         },
         ambientLightProbe: {
@@ -30,14 +33,28 @@ export default {
         },
     },
     plane: {
-        size: 1000,
-        halfSize: 500
+        size: 500,
+        halfSize: 250
     },
     cylinders: {
-        maxCylinder: 150,
+        maxCylinder: 30,
         randomizeHeight: {
             min: 40,
-            max: 150
+            max: 130
+        }
+    },
+    controls: {
+        orbit: {
+            minPolarAngle: 1.25,
+            maxPolarAngle: 1.25,
+            minDistance: 450,
+            maxDistance: 450,
+            autoRotate: true,
+        }
+    },
+    tests: {
+        stats: {
+            show: true
         }
     }
 }
