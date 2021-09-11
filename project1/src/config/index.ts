@@ -17,7 +17,7 @@ export default {
             two: '#4232A0'
         },
         intensity:  0.3,
-        distance: 300,
+        distance: 800,
         decay: 2.4,
         animationSpeed: 0.5,
         maxLights: 10
