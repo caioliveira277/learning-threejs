@@ -62,6 +62,10 @@ Após o comando de instalação de dependencias, execute o comando para iniciar 
    <br>
 
 ---
+## Documentos de entendimento: 🤔
+[<ins>Conceito sobre valores radianos</ins>](https://github.com/caioliveira277/learning-threejs/blob/feature/docs/docs/images/radiano.md)
+
+---
 ## Links: 🌐
 ***Projeto online GitHub Pages:***<br>
 Em breve... 🌴
