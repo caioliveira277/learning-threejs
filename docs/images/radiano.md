@@ -14,7 +14,7 @@ Seu valor é **3,1415...**
 ### Rotacionando elementos em 90º:
 Desenvolvi o desenho abaixo como forma de entendimento da utilização de valores com base no **PI**:
 
-<img src="https://www.google.com.br/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" height="100" />
+<img src="https://caioliveira277.github.io/learning-threejs/images/radiano.png" height="300" />
 
 A ideia é que se o valor de **PI** é igual a **3,14** (arredondado) o que corresponde a **180°**, para rotacionar um elemento em **90°** é necessário dividir o valor de PI por 2. Obtendo dessa forma a metade dele, que seria igual a **1.57**
 
